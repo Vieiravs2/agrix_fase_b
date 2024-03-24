@@ -1,6 +1,7 @@
 package com.betrybe.agrix.controllers;
 
 import com.betrybe.agrix.controllers.dto.FertilizerDto;
+import com.betrybe.agrix.exceptions.FarmNotFoundException;
 import com.betrybe.agrix.models.entities.Fertilizer;
 import com.betrybe.agrix.services.FertilizerService;
 import java.util.List;
@@ -54,5 +55,19 @@ public class FertilizerController {
     }
 
     return ResponseEntity.ok().body(allFertilizers);
+  }
+
+  /**
+  * Método getById.
+  */
+  @GetMapping("/fertilizers/{id}")
+  public ResponseEntity<?> getById(@PathVariable Long id) {
+    Optional<Fertilizer> optionalFertilizer = fertilizerService.getById(id);
+
+    Fertilizer fertilizer = optionalFertilizer.orElseGet(() -> {
+      throw new FarmNotFoundException("Fertilizante não encontrado!");
+    });
+  
+    return ResponseEntity.ok().body(fertilizer);
   }
 }
