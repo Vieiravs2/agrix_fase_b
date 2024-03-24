@@ -65,13 +65,14 @@ public class FarmController {
    * Maps a Crop object to a CropDto.
    */
   private CropDto mapToCropDto(Crop crop, Long farmId) {
-    return new CropDto(crop.getId(), crop.getName(), crop.getPlantedArea(), farmId);
+    return new CropDto(crop.getId(), crop.getName(), crop.getPlantedArea(),
+      farmId, crop.getPlantedDate(), crop.getHarvestDate());
   }
 
   /**
   * Creates a new crop for the farm with the specified ID.
   */
-  @PostMapping(value = "/farms/{id}/crops")
+  @PostMapping("/farms/{id}/crops")
   public ResponseEntity<CropDto> createCrop(@PathVariable("id") Long farmId, 
       @RequestBody CropDto cropDto) {
     Crop createdCrop = farmService.createCrop(farmId, cropDto.toEntity());
@@ -90,43 +91,12 @@ public class FarmController {
   }
 
   /**
-   * Returns a list of all crops.
-   */
-  @GetMapping("/crops")
-  public ResponseEntity<List<CropDto.ToResponse>> getAllCrops() {
-    List<Crop> crops = farmService.getAllCrops();
-    List<CropDto.ToResponse> cropDtos = mapToCropDtoList(crops);
-    return ResponseEntity.ok().body(cropDtos);
-  }
-
-  /**
-  * Retrieves a specific crop by its ID.
-  */
-  @GetMapping("/crops/{id}")
-  public ResponseEntity<?> getCropById(@PathVariable Long id) {
-    Optional<Crop> cropOptional = farmService.getCropById(id);
-
-    if (cropOptional.isEmpty()) {
-      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Plantação não encontrada!");
-    }
-
-    CropDto.ToResponse response = CropDto.fromEntity(cropOptional.get());
-    return ResponseEntity.ok(response);
-  }
-
-
-  private List<CropDto.ToResponse> mapToCropDtoList(List<Crop> crops) {
-    return crops.stream()
-      .map(CropDto::fromEntity)
-      .collect(Collectors.toList());
-  }
-
-  /**
   * Maps a list of Crop entities to a list of CropDto objects.
   */
   private List<CropDto> mapToCropDtoList(List<Crop> crops, Long farmId) {
     return crops.stream()
-      .map(crop -> new CropDto(crop.getId(), crop.getName(), crop.getPlantedArea(), farmId))
+      .map(crop -> new CropDto(crop.getId(), crop.getName(), crop.getPlantedArea(),
+        farmId, crop.getPlantedDate(), crop.getHarvestDate()))
       .collect(Collectors.toList());
   }
 }

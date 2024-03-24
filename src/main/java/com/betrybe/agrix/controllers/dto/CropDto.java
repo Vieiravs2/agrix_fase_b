@@ -1,40 +1,36 @@
 package com.betrybe.agrix.controllers.dto;
 
 import com.betrybe.agrix.models.entities.Crop;
+import java.time.LocalDate;
+import java.util.List;
 
 /**
  * Crop DTO.
  */
-public record CropDto(Long id, String name, Double plantedArea, Long farmId) {
-  /**
-  * toCrop.
-  */
-  public Crop toCrop() {
-    Crop crop = new Crop();
-    crop.setName(name);
-    crop.setPlantedArea(plantedArea);
-    return crop;
-  }
+public record CropDto(Long id, String name, Double plantedArea,
+    Long farmId, LocalDate plantedDate, LocalDate harvestDate) {
   
   /**
-  * ToResponse.
+  * toDto.
   */
-  public static record ToResponse(Long id, String name, double plantedArea, Long farmId) {
-  
+  public static CropDto toDto(Crop crop) {
+    return new CropDto(crop.getId(), crop.getName(), crop.getPlantedArea(),
+      crop.getFarm().getId(), crop.getPlantedDate(), crop.getHarvestDate());
   }
 
-  /**
-  * fromEntity.
-  */
-  public static ToResponse fromEntity(Crop crop) {
-    return new ToResponse(crop.getId(), crop.getName(), crop.getPlantedArea(), crop
-      .getFarm().getId());
-  }
-  
   /**
   * toEntity.
   */
   public Crop toEntity() {
-    return new Crop(id, name, plantedArea, null);
+    return new Crop(id, name, plantedArea, null, plantedDate, harvestDate);
+  }
+
+  /**
+  * toList.
+  */
+  public static List<CropDto> toList(List<Crop> crops) {
+    return crops.stream()
+      .map(CropDto::toDto)
+      .toList();
   }
 }
