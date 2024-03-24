@@ -76,17 +76,9 @@ public class FarmService {
     newCrop.setFarm(farm);
     return cropRepository.save(newCrop);
   }
-
+  
   public List<Crop> getAllCrops(Long farmId) {
     Farm farm = getFarmById(farmId);
     return cropRepository.findByFarm(farm);
-  }
-
-  public List<Crop> getAllCrops() {
-    return cropRepository.findAll();
-  }
-
-  public Optional<Crop> getCropById(Long farmId) {
-    return cropRepository.findById(farmId);
   }
 }

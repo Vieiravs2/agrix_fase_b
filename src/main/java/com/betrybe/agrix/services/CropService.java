@@ -2,12 +2,11 @@ package com.betrybe.agrix.services;
 
 import com.betrybe.agrix.exceptions.FarmNotFoundException;
 import com.betrybe.agrix.models.entities.Crop;
-import com.betrybe.agrix.models.entities.Farm;
 import com.betrybe.agrix.models.repositories.CropRepository;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Service.
@@ -41,5 +40,12 @@ public class CropService {
     }
 
     throw new FarmNotFoundException("Plantação não encontrada!");
+  }
+
+  /**
+  * searchCrop.
+  */
+  public List<Crop> searchCrop(LocalDate start, LocalDate end) {
+    return cropRepository.findAllByHarvestDate(start, end);
   }
 }
