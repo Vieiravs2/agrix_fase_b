@@ -72,7 +72,7 @@ public class CropController {
   */
   @PostMapping("/crops/{cropId}/fertilizers/{fertilizerId}")
   public ResponseEntity<String> associateCropWithFertilizer(@PathVariable Long cropId,
-    @PathVariable Long fertilizerId) {
+      @PathVariable Long fertilizerId) {
     Optional<Fertilizer> fertilizerById = fertilizerService.getById(fertilizerId);
     Crop crop = cropService.getCropById(cropId);
 

@@ -41,9 +41,9 @@ public class Crop {
 
   @ManyToMany
   @JoinTable(
-    name = "crops_fertilizers",
-    joinColumns = @JoinColumn(name = "crop_id"),
-    inverseJoinColumns = @JoinColumn(name = "fertilizer_id")
+      name = "crops_fertilizers",
+      joinColumns = @JoinColumn(name = "crop_id"),
+      inverseJoinColumns = @JoinColumn(name = "fertilizer_id")
   )
   private List<Fertilizer> fertilizers = new ArrayList<>();
 

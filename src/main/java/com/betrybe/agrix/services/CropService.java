@@ -5,7 +5,6 @@ import com.betrybe.agrix.models.entities.Crop;
 import com.betrybe.agrix.models.entities.Farm;
 import com.betrybe.agrix.models.repositories.CropRepository;
 import com.betrybe.agrix.models.repositories.FarmRepository;
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
