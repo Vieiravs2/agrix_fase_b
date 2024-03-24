@@ -29,4 +29,17 @@ public class CropService {
   public List<Crop> getAllCrops() {
     return cropRepository.findAll();
   }
+
+  /**
+  * getCropById.
+  */
+  public Crop getCropById(Long id) {
+    Optional<Crop> crop = cropRepository.findById(id);
+
+    if (!crop.isEmpty()) {
+      return crop.get();
+    }
+
+    throw new FarmNotFoundException("Plantação não encontrada!");
+  }
 }

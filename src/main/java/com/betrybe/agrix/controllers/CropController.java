@@ -40,31 +40,16 @@ public class CropController {
     List<CropDto> cropDtos = CropDto.toList(crops);
     return ResponseEntity.ok(cropDtos);
   }
-  
-  // /**
-  //  * Returns a list of all crops.
-  //  */
-  // @GetMapping("/crops")
-  // public ResponseEntity<List<CropDto.ToResponse>> getAllCrops() {
-  //   List<Crop> crops = farmService.getAllCrops();
-  //   List<CropDto.ToResponse> cropDtos = mapToCropDtoList(crops);
-  //   return ResponseEntity.ok().body(cropDtos);
-  // }
 
-  // /**
-  //  * Retrieves a specific crop by its ID.
-  // */
-  // @GetMapping("/crops/{id}")
-  // public ResponseEntity<?> getCropById(@PathVariable Long id) {
-  //   Optional<Crop> cropOptional = farmService.getCropById(id);
-
-  //   if (cropOptional.isEmpty()) {
-  //     return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Plantação não encontrada!");
-  //   }
-
-  //   CropDto.ToResponse response = CropDto.fromEntity(cropOptional.get());
-  //   return ResponseEntity.ok(response);
-  // }
+  /**
+   * Retrieves a specific crop by its ID.
+  */
+  @GetMapping("/crops/{id}")
+  public ResponseEntity<CropDto> getCropById(@PathVariable Long id) {
+    Crop crop = cropService.getCropById(id);
+    CropDto cropDto = CropDto.toDto(crop);
+    return ResponseEntity.ok(cropDto);
+  }
 
 
   // private List<CropDto.ToResponse> mapToCropDtoList(List<Crop> crops) {

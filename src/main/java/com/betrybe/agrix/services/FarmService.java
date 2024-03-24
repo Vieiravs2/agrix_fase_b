@@ -52,7 +52,7 @@ public class FarmService {
       return farm.get();
     }
 
-    throw new FarmNotFoundException();
+    throw new FarmNotFoundException("Fazenda não encontrada!");
   }
 
   /**
@@ -60,7 +60,12 @@ public class FarmService {
   */
   private Farm retrieveFarmById(Long farmId) {
     Optional<Farm> optionalFarm = farmRepository.findById(farmId);
-    return optionalFarm.orElseThrow(FarmNotFoundException::new);
+
+    if (optionalFarm.isEmpty()) {
+      throw new FarmNotFoundException("Fazenda não encontrada!");
+    }
+
+    return optionalFarm.get();
   }
 
   /**
